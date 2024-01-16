@@ -1,10 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
+}
+proxies = {
+    'https': 'http://Ch7rbv:XArksh@45.91.66.80:8000' #https://proxy6.net/user/proxy
+}
+def get_location(url):
+    response = requests.get(url=url, headers=headers, proxies=proxies)
+    soup = BeautifulSoup(response.text, 'lxml')
 
 def get_specific_text(url, output_filename='filename.txt'):
     # Отправляем GET-запрос
     response = requests.get(url)
+
+    # Проверяем успешность запроса
+    response.raise_for_status()
+
     target_tag = 'textarea'
     target_class = 'mw-editfont-monospace'
 
