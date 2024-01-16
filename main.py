@@ -7,15 +7,34 @@ import pyperclip
 import requests
 
 
+def check_links(entry1_value, entry2_value, use_single_entry):
+    # Проверяем, введено ли название страницы в первом окне
+    if not entry1_value.startswith('https://'):
+        # Если название страницы, то сохраняем его
+        entry1_value = entry1_value.strip()
+    else:
+        entry1_value = entry1_value.replace('https://station14.ru/index.php?title=', '')
+        entry1_value = entry1_value.replace('&action=edit', '')
+    if not use_single_entry:
+        # Проверяем, введено ли название страницы во втором окне
+        if not entry2_value.startswith('https://'):
+            # Если название страницы, то сохраняем его
+            entry2_value = entry2_value.strip()
+        else:
+            entry2_value = entry2_value.replace('https://ss14andromeda13.fandom.com/ru/wiki/', '')
+            entry2_value = entry2_value.replace('?action=edit', '')
+
+    copy_and_update_links(entry1_value, entry2_value, use_single_entry)
+
 def copy_and_update_links(entry1_value, entry2_value, use_single_entry):
     if use_single_entry:
         # Используем только entry1 для создания ссылки
         link1 = f'https://station14.ru/index.php?title={entry1_value}&action=edit'
-        link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry1_value}?veaction=editsource'
+        link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry1_value}?action=edit'
     else:
         # Используем entry1 и entry2 для создания ссылки
         link1 = f'https://station14.ru/index.php?title={entry1_value}&action=edit'
-        link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry2_value}?veaction=editsource'
+        link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry2_value}?action=edit'
         # Дополнительная логика для обработки ссылок
 
     filename = 'filename.txt'
@@ -52,7 +71,7 @@ def create_main_menu_tab(tab_control, settings_vars):
                                                 lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
-                                                 command=lambda: copy_and_update_links(entry1_main_menu.get(),
+                                                 command=lambda: check_links(entry1_main_menu.get(),
                                                                                        entry2_main_menu.get(),
                                                                                        not settings_vars[
                                                                                            'use_single_entry'].get()))

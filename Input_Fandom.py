@@ -63,11 +63,13 @@ def edit_and_save_text(url, filename, username, password):
                 new_text = f.read()
             pyperclip.copy(new_text)
             print(f"Текст получен")
-
+            time.sleep(1)
 
             # Очищаем и вводим новый текст
             paragraph_element.send_keys(Keys.CONTROL + "a")
+            time.sleep(1)
             paragraph_element.send_keys(Keys.DELETE)
+
             print("Очищено, приступаем писать текст")
             for line in new_text.splitlines():
                 paragraph_element.send_keys(line)
