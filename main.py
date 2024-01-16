@@ -30,26 +30,6 @@ def copy_and_update_links():
     # Копируем ссылки в буфер обмена
     pyperclip.copy(f"Link 1: {link1}\nLink 2: {link2}")
 
-def print_to_output(message):
-    # Записываем сообщение в область вывода
-    output_area.configure(state="normal")
-    output_area.insert(tk.END, message + "\n")
-    output_area.configure(state="disabled")
-
-class RedirectText:
-    def __init__(self, text_widget):
-        self.text_widget = text_widget
-
-    def write(self, string):
-        # Вывод в текстовое поле
-        self.text_widget.configure(state="normal")
-        self.text_widget.insert(tk.END, string)
-        self.text_widget.configure(state="disabled")
-
-    def flush(self):
-        pass
-
-
 # Создаем основное окно
 window = tk.Tk()
 window.title("Копировать и обновить Вики-страницы")
