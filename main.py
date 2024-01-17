@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from Copy_Corvax import get_specific_text
-from Input_Fandom import edit_and_save_text
+from Input_Fandom import login, edit_and_save_text
 from proxy_auth_data import username, password
 import pyperclip
 import requests
@@ -44,11 +44,9 @@ def copy_and_update_links(entry1_value, entry2_value, use_single_entry):
 
     # Обновляем текст на второй Вики-странице
     print("Начинаем вводить текст")
+    login()
     edit_and_save_text(link2, filename, username, password)
     print("Ввод окончен")
-
-    # Копируем ссылки в буфер обмена
-    pyperclip.copy(f"Link 1: {link1}\nLink 2: {link2}")
 
 
 def toggle_entry_fields(entry2_main_menu, settings_vars):
