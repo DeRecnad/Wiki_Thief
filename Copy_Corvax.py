@@ -38,10 +38,16 @@ def write_data_to_file(url, file_path='templates_used.txt'):
 
             print(f'Ссылки на шаблоны, содержащие "Шаблон", успешно записаны в файл {file_path}')
             print(f'Общее количество таких ссылок: {links_count}')
+
+            # Возвращаем количество ссылок
+            return links_count
         else:
             print('Теги <div class="templatesUsed"> не найдены на странице')
+            return 0
     else:
         print(f'Ошибка при запросе к странице. Код: {response.status_code}')
+        return 0
+
 
 def get_specific_text(url, output_filename='filename.txt'):
     # Отправляем GET-запрос
@@ -76,6 +82,6 @@ def get_specific_text(url, output_filename='filename.txt'):
         # Если запрос не успешен, выводим сообщение об ошибке
         print(f"Ошибка {response.status_code}: Невозможно получить содержимое страницы.")
 
-# Пример использования
-url = 'https://station14.ru/index.php?title=%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0_%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D0%B2&action=edit'
-write_data_to_file(url, 'templates_used.txt')
+# # Пример использования
+# url = 'https://station14.ru/index.php?title=%D0%A2%D0%B0%D0%B1%D0%BB%D0%B8%D1%86%D0%B0_%D0%B3%D1%80%D1%83%D0%B7%D0%BE%D0%B2&action=edit'
+# write_data_to_file(url, 'templates_used.txt')

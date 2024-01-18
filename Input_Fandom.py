@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from urllib3.exceptions import MaxRetryError
+from selenium.common.exceptions import NoSuchElementException
 
 import time
 import pyperclip
@@ -49,6 +50,15 @@ def edit_and_save_text(url, filename, username, password):
             driver.get(url)
             print('Выполнен переход на страницу')
             time.sleep(5)
+            try:
+                # Найти элемент по комбинированному селектору
+                enter_button = driver.find_element(by=By.XPATH, value="//span[@class='oo-ui-widget oo-ui-widget-enabled oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-flaggedElement-primary oo-ui-flaggedElement-progressive oo-ui-buttonWidget oo-ui-actionWidget']")
+
+                # Нажать на кнопку
+                enter_button.click()
+                print('Кнопка "Сохранить" нажата')
+            except Exception as e:
+                print(f'Ошибка при нажатии кнопки "Сохранить": {e}')
 
             # Получаем редактируемый элемент
             editable_element = driver.find_element(by=By.XPATH,
