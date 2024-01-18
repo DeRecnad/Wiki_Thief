@@ -46,7 +46,7 @@ def write_data_to_file(url, file_path='templates_used.txt'):
             return 0
     else:
         print(f'Ошибка при запросе к странице. Код: {response.status_code}')
-        return 0
+        return 'E520'
 
 
 def get_specific_text(url, output_filename='filename.txt'):

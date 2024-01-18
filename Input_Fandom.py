@@ -59,6 +59,7 @@ def edit_and_save_text(url, filename, username, password):
                 print('Кнопка "Сохранить" нажата')
             except Exception as e:
                 print(f'Ошибка при нажатии кнопки "Сохранить": {e}')
+                print('Кнопка не была найдена')
 
             # Получаем редактируемый элемент
             editable_element = driver.find_element(by=By.XPATH,
@@ -71,7 +72,6 @@ def edit_and_save_text(url, filename, username, password):
             # Читаем текст из файла
             with open(filename, 'r', encoding='utf-8') as f:
                 new_text = f.read()
-            pyperclip.copy(new_text)
             print(f"Текст получен")
             time.sleep(1)
 
@@ -84,6 +84,7 @@ def edit_and_save_text(url, filename, username, password):
             for line in new_text.splitlines():
                 paragraph_element.send_keys(line)
                 paragraph_element.send_keys(Keys.ENTER)
+                time.sleep(0.1)
             print("Написано")
 
             # Находим кнопку сохранения по тексту внутри кнопки
@@ -95,6 +96,9 @@ def edit_and_save_text(url, filename, username, password):
             end = time.time() - start
             print(f"Время выполнения: {end} сек.")
 
+
+            driver.close()
+            driver.quit()
         except MaxRetryError as ex:
             print(f"MaxRetryError: {ex}")
         except Exception as ex:

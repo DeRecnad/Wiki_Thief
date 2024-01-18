@@ -445,6 +445,7 @@
   ('logging',
    'C:\\Users\\gamer\\AppData\\Local\\Programs\\Python\\Python39\\lib\\logging\\__init__.py',
    'PYMODULE'),
+  ('logic', 'D:\\Programming\\Wiki_Thief\\logic.py', 'PYMODULE'),
   ('lxml',
    'D:\\Programming\\Wiki_Thief\\venv\\lib\\site-packages\\lxml\\__init__.py',
    'PYMODULE'),
