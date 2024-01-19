@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import traceback
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
@@ -46,7 +47,7 @@ def write_data_to_file(url, file_path='templates_used.txt'):
             return 0
     else:
         print(f'Ошибка при запросе к странице. Код: {response.status_code}')
-        return 'E520'
+        return 'ERR520'
 
 
 def get_specific_text(url, output_filename='filename.txt'):
@@ -54,7 +55,11 @@ def get_specific_text(url, output_filename='filename.txt'):
     response = requests.get(url)
 
     # Проверяем успешность запроса
-    response.raise_for_status()
+    try:
+        response.raise_for_status()
+    except Exception:
+        print(f"Ошибка 520 (в CopyCorvax.py: {traceback.extract_stack()[-2].lineno})")
+        return 'ERR520'
 
     target_tag = 'textarea'
     target_class = 'mw-editfont-monospace'

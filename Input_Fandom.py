@@ -96,7 +96,6 @@ def edit_and_save_text(url, filename, username, password):
             end = time.time() - start
             print(f"Время выполнения: {end} сек.")
 
-
             driver.close()
             driver.quit()
         except MaxRetryError as ex:
