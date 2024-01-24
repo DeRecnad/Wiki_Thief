@@ -1,2 +1,158 @@
-{{in development|Начальный}}
-<div style="box-shadow: 0 0 .2em violet; border-radius: .22em; margin: 1em 0 1em 0; padding: 1px; text-align:center"> Экспедиции </div>
+<noinclude>При добавлении дополнительного описания используйте '''исключительно''' ID предметов из игры в качестве аргумента для switch (Нажмите "править")</noinclude>
+<!--Сделать СТАТЫ предметов (через шаблоны)-->{{#switch: {{{1}}}
+| CaptainIDCard =
+'''Особое:'''<br><!--
+-->• Обладает полным доступом
+| WeaponAntiqueLaser =
+'''Особое:'''<br><!--
+-->• Самостоятельно перезаряжается
+| ClothingShoesBootsMagAdv =
+'''Особое:'''<br><!--
+-->• Не замедляют владельца
+| FoodMeatCorgi =
+'''Особое:'''<br><!--
+-->• Опознать первосортное мясо корги может только шеф-повар
+| Hypospray =
+• Вмещает 30 единиц реагентов
+| ClothingShoesBootsCombatFilled =
+'''Содержит:'''<br><!--
+-->• [[File:Боевой нож.png|24px]] Боевой нож
+| ClothingEyesGlassesSunglasses =
+'''Особое:'''<br><!--
+-->• Защищают от ослепления
+| ClothingHeadsetAltCentCom =
+'''Содержит:'''<br><!--
+-->•[[File:EncryptionKeyStationMaster.png|24px]] Ключ шифрования руководства станции<br><!--
+-->•[[File:EncryptionKeyCentcom.png|24px]] Ключ шифрования центрального командования
+| BoxFolderBlack = Может содержать до 5 единиц [[File:Paper.png|24px]] бумаги
+| PenCentcom = • '''отвертка'''<br>'''Урон'''<br><!--
+-->• 15 единиц '''Piercing'''<br><!--
+-->'''Скорость'''<br><!--
+-->• 1 в секунду
+| CaptainSabre = '''Особое:'''<br><!--
+-->• Отражает пули и лазеры с 50% шансом под углом 90°.<br><!--
+-->• Скорость атаки быстрее на 50%.<br><!--
+-->•Вес : 15.
+| MagazineLightRifle = '''Особое:'''<br><!--
+-->• Вмещает 30 патрон.<br><!--
+-->• Вес : 5.<br><!--
+-->• Магазин [[Файл:RifleMag30St.png|32px]]наносят 19 травм.<br><!--
+-->• Магазин [[Файл:RifleMag30U.png]]наносят 2 травм.<br><!--
+-->• Магазин [[Файл:RifleMag30R.png|32px]]наносят 3 травм, 14 стамины.<br><!--
+-->• Магазин [[Файл:RifleMag30S.png|32px]]наносят 21 травм.
+| WeaponSniperMosin = '''Особое:'''<br><!--
+-->• [[Файл:PistolCartridge.png]] наносит <span style="color:red;">19 уколов.</span><br><!--
+-->• Обойма : 10 выстрелов.<br><!--
+-->• Ручная подзарядка.<br><!--
+-->• Скорострельность : 0,8 в секунду.<br><!--
+-->• Вес : 50.
+| EnergyDagger = '''Особое:'''<br><!--
+-->• [[Файл:Edagger.gif]] наносит <span style="color:red;">9 разрезов и 9 ожогов</span> в включенном состоянии.<br><!--
+-->• В выключенном наносит состоянии наносит <span style="color:red;">1 ударов.</span><br><!--
+-->• Стандартная скорость атаки.<br><!--
+-->• Шанс 25% отразить лазер/пулю под углом 45°<br><!--
+-->• Шанс выбить оружие из рук понижается на 40%<br><!--
+-->• Вес : 5 в выключенном состоянии.
+| WeaponSniperMosin = '''Особое:'''<br><!--
+-->• [[Файл:PistolCartridge.png]] наносит <span style="color:red;">19 уколов.</span><br><!--
+-->• Обойма : 10 выстрелов.<br><!--
+-->• Подзарядка : Ручная.<br><!--
+-->• Скорострельность : 0,8 в секунду.<br><!--
+-->• Вес : 50.
+| EnergyDagger = '''Особое:'''<br><!--
+-->• [[Файл:Edagger.gif]] наносит <span style="color:red;">9 разрезов и 9 ожогов</span> в включенном состоянии.<br><!--
+-->• В выключенном наносит состоянии наносит <span style="color:red;">1 ударов.</span><br><!--
+-->• Стандартная скорость атаки.<br><!--
+-->• Шанс 25% отразить лазер/пулю под углом 45°<br><!--
+-->• Шанс выбить оружие из рук понижается на 40%<br><!--
+-->• Вес : 5 в выключенном состоянии.
+| WeaponPistolViper = '''Особое:'''<br><!--
+-->• В наличии магазин с 10 патронами .35 авто.<br><!--
+-->• Магазин[[Файл:Mag35St.png]]наносит <span style="color:red;">16 уколов.</span><br><!--
+-->• Скорострельность : 6,0 в секунду.<br><!--
+-->• Имеет режимы : авто и полуавто.<br><!--
+-->• Вес : 10.
+| WeaponPistolCobra = '''Особое:'''<br><!--
+-->• В наличии магазин с 11 патронами .25 безгильзовый.<br><!--
+-->• После выстрела отсутствуют гильзы.<br><!--
+-->• Магазин[[Файл:Mag35St.png]]наносит <span style="color:red;">19 уколов.</span><br><!--
+-->• Скорострельность : 4,0 в секунду.<br><!--
+-->• Имеет режимы : авто и полуавто.<br><!--
+-->• Вес : 10.
+| EnergySword = '''Особое:'''<br><!--
+-->• Наносит <span style="color:red;">15 разрезов, 15 ожогов и 4 структуры</span> в включенном состоянии.<br><!--
+-->• В выключенном наносит состоянии наносит <span style="color:red;">4,5 ударов.</span><br><!--
+-->• Скорость атаки : 1,5 в секунду.<br><!--
+-->• Шанс 25% отразить лазер/пулю под углом 45°<br><!--
+-->• Шанс выбить оружие из рук понижается на 60%<br><!--
+-->• Вес : 5 в выключенном состоянии.
+| WeaponRevolverPython = '''Особое:'''<br><!--
+-->• Имеет спидлоадер с 6 патронами.<br><!--
+-->• [[Файл:Speedloader40St.png]]наносит <span style="color:red;">35 уколов.</span><br><!--
+-->• Скорострельность : 2,0 в секунду.<br><!--
+-->• Вес : 10.
+| ClothingHandsGlovesNorthStar = '''Особое:'''<br><!--
+-->• Наносит <span style="color:red;">8 ударов.</span><br><!--
+-->• Возможность установить фразу при ударе.<br><!--
+-->• Скорость атаки : 4,0 в секунду.<br><!--
+-->• Вес : 5.
+| FireAxeFlaming = '''Особое:'''<br><!--
+-->• Наносит одноручным хватом <span style="color:red;">5 ударов, 13 разрезов и 7 структуры.</span><br><!--
+-->• Наносит двуручным хватом <span style="color:red;">7,5 ударов, 23,5 разрезов и 67 структуры.</span><br><!--
+-->• Поджигает при ударе.<br><!--
+-->• Скорость атаки : 0,75 в секунду.<br><!--
+-->• Вес : 150.
+| EnergySwordDouble = '''Особое:'''<br><!--
+-->• Наносит двуручным хватом <span style="color:red;">9 разрезов, 9 ожогов и 20 структуры.</span><br><!--
+-->• В выключенном наносит состоянии наносит <span style="color:red;">4,5 ударов.</span><br><!--
+-->• Скорость атаки : 1,5 в секунду.<br><!--
+-->• Шанс 75% отразить лазер/пулю под углом 75°<br><!--
+-->• Шанс выбить оружие из рук понижается на 70%<br><!--
+-->• Вес : 5 в выключенном состоянии.
+| ClothingHeadsetMedical=
+'''Содержит:'''<br><!--
+-->• [[File: EncryptionKeyCommon.png|24px]] ключ шифрования общего канала.<br><!--
+-->• [[File: EncryptionKeyMedical.png|24px]] ключ шифрования медицинского канала.
+| ClothingBeltMedical=
+Имеет вместительность в 60 единиц.<br><br><!--
+-->'''Содержит:'''<br><!--
+-->•[[File: Bruisepack.png|24px]] Набор для ушибов x20.<br><!--
+-->•[[File: Ointment.png|24px]] Мазь x10.<br><!--
+-->•[[File: gauze.png|24px]] Марлевый бинт x10.<br><!--
+-->•[[File: Bloodpack.png|24px]] Пакет с кровью x10.<br><!--
+-->•[[File: Medipen.png|24px]] Экстренный медипен.
+| ClothingBackpackMedical=
+Имеет вместимость в 100 единиц.<br><br><!--
+-->'''Содержит:'''<br><!--
+-->•[[File: Survivalbox.png|24px]] Аварийный набор.
+| ClothingOuterCoatLab=
+'''Имеет защиту:'''<br><!--
+-->• Снижает <span style="color:orange">кислотный</span> урон на 25%.
+| Brutepack=
+'''Особое:'''<br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">ударов</span><br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">разрезов</span><br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">уколов</span>
+| Ointment=
+'''Особое:'''<br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">термических</span><br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">электрических</span><br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">обморожения</span><br><!--
+-->• Лечит <span style="color: green">1.5</span> единиц <span style="color: red">кислотных</span>
+| MedicatedSuture=
+'''Особое:'''<br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">ударов</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">разрезов</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">уколов</span>
+| RegenerativeMesh=
+'''Особое:'''<br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">термических</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">электрических</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">обморожения</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">кислотных</span>
+| Gauze=
+'''Особое:'''<br><!--
+-->• Останавливает кровотечение<br><!--
+-->• Лечит <span style="color: green">5</span> единиц <span style="color: red">разрезов</span><br><!--
+-->• Лечит <span style="color: green">10</span> единиц <span style="color: red">уколов</span>
+}}
