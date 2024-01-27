@@ -1,7 +1,21 @@
 from Copy_Corvax import get_specific_text, write_data_to_file
-from Input_Fandom import edit_and_save_text
+from Input_Fandom import edit_and_save_text, login
 from proxy_auth_data import username, password
 import traceback
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from urllib3.exceptions import MaxRetryError
+
+
+
+def get_browser_options():
+    options = webdriver.ChromeOptions()
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    #options.add_argument("--headless=new")
+    options.set_capability('pageLoadStrategy', "eager")
+    return options
 
 
 def check_links(entry1_value, entry2_value, setting_vars):
@@ -50,7 +64,7 @@ def get_and_remove_last_link(file_path='templates_used.txt'):
 
 
 def rename_links(entry1_value, entry2_value, setting_vars):
-    if not setting_vars.use_single_entry:
+    if setting_vars.use_single_entry:
         # Используем только entry1 для создания ссылки
         link1 = f'https://station14.ru/index.php?title={entry1_value}&action=edit'
         link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry1_value}?action=edit'
@@ -62,7 +76,7 @@ def rename_links(entry1_value, entry2_value, setting_vars):
     return link1, link2
 
 
-def process_links(link1, link2):
+def process_links(link1, link2, driver):
     filename = 'filename.txt'
     print("Получаем текст")
     if get_specific_text(link1) == 'ERR520':
@@ -72,16 +86,23 @@ def process_links(link1, link2):
 
     # Обновляем текст на второй Вики-странице
     print("Начинаем вводить текст")
-    edit_and_save_text(link2, filename, username, password)
+    edit_and_save_text(link2, filename, driver)
     print("Ввод окончен")
 
 
-def copy_and_update_links(link1, link2):
-    process_links(link1, link2)
+def copy_and_update_links(link1, link2, driver):
+    process_links(link1, link2, driver)
 
 
 def check_count_links(link1, link2, setting_vars):
+
+    # Инициализация браузера
+    service = webdriver.chrome.service.Service(
+            executable_path="chromedriver.exe")
+    # Опции браузера
+    options = get_browser_options()
     count_templates_links = write_data_to_file(link1)
+
     if setting_vars.use_templates:
         if count_templates_links == 'ERR520':
             print(f'Ошибка 520 (в logic.py: {traceback.extract_stack()[-2].lineno})')
@@ -89,21 +110,27 @@ def check_count_links(link1, link2, setting_vars):
             print(f'Были обнаружены шаблоны, проверка на шаблоны вернула: {count_templates_links}')
             main1_link = link1
             main2_link = link2
-            while count_templates_links != 0:
-                link2 = get_and_remove_last_link()
-                link1 = link2
-                link1, link2 = rename_links(link1, link2, setting_vars)
-                process_links(link1, link2)
-                count_templates_links -= 1
-            process_links(main1_link, main2_link)
+            with webdriver.Chrome(service=service, options=options) as driver:
+                login(username, password, driver)
+                while count_templates_links != 0:
+                    link2 = get_and_remove_last_link()
+                    link1 = link2
+                    link1, link2 = rename_links(link1, link2, setting_vars)
+                    process_links(link1, link2, driver)
+                    count_templates_links -= 1
+                process_links(main1_link, main2_link, driver)
         elif count_templates_links == 0:
             print(f'Шаблоны не обнаружены проверка на шаблоны вернула: {count_templates_links}')
-            copy_and_update_links(link1, link2)
+            with webdriver.Chrome(service=service, options=options) as driver:
+                login(username, password, driver)
+                copy_and_update_links(link1, link2, driver)
         else:
             print(f'Ошибка, проверка на шаблоны вернула: {count_templates_links}')
     elif not setting_vars.use_templates:
         print(f'Перенос без шаблонов')
-        copy_and_update_links(link1, link2)
+        with webdriver.Chrome(service=service, options=options) as driver:
+            login(username, password, driver)
+            copy_and_update_links(link1, link2, driver)
     else:
         print(f'Неизвестная ошибка')
 

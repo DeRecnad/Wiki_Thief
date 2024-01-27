@@ -4,8 +4,8 @@ from logic import check_links
 
 class SettingsVars:
     def __init__(self):
-        self.use_single_entry = tk.BooleanVar()
-        self.use_templates = tk.BooleanVar()
+        self.use_single_entry = tk.IntVar()
+        self.use_templates = tk.IntVar()
         # Добавьте другие переменные по мере необходимости
 
 def toggle_entry_fields(entry2_main_menu, settings_vars):
@@ -26,6 +26,9 @@ def create_main_menu_tab(tab_control, settings_vars):
     settings_vars.use_single_entry.trace_add('write',
                                             lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
+    settings_vars.use_templates.trace_add('write',
+                                          lambda *args: None)
+
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
                                                  command=lambda: check_links(entry1_main_menu.get(),
                                                                              entry2_main_menu.get(),
@@ -40,9 +43,9 @@ def create_settings_tab(tab_control, settings_vars):
                                    variable=settings_vars.use_single_entry)
     check_button1.place(x=0, y=0)
 
-    check_button2 = tk.Checkbutton(settings_tab, text="Переносить шаблоны",
+    check_button2 = tk.Checkbutton(settings_tab, text="Использовать шаблоны",
                                    variable=settings_vars.use_templates)
-    check_button2.place(x=check_button1.winfo_x(), y=check_button1.winfo_y() + check_button1.winfo_height() + 40)
+    check_button2.place(x=0, y=25)
 
 def main():
     window = tk.Tk()
