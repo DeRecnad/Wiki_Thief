@@ -1,7 +1,8 @@
 from Copy_Corvax import get_specific_text, write_data_to_file
-from Input_Fandom import edit_and_save_text
+from Input_Fandom import FandomEditor
 from proxy_auth_data import username, password
 
+instance = FandomEditor()
 
 def check_links(entry1_value, entry2_value, use_single_entry):
     # Проверяем, введено ли название страницы в первом окне
@@ -9,8 +10,8 @@ def check_links(entry1_value, entry2_value, use_single_entry):
         # Если название страницы, то сохраняем его
         entry1_value = entry1_value.strip()
     else:
-        entry1_value = entry1_value.replace('https://station14.ru/index.php?title=', '')
-        entry1_value = entry1_value.replace('&action=edit', '')
+        entry1_value = entry1_value.replace('https://station14.ru/edit/', '')
+        entry1_value = entry1_value.replace('', '')
     if not use_single_entry:
         # Проверяем, введено ли название страницы во втором окне
         if not entry2_value.startswith('https://'):
@@ -51,11 +52,11 @@ def get_and_remove_last_link(file_path='templates_used.txt'):
 def rename_links(entry1_value, entry2_value, use_single_entry):
     if use_single_entry:
         # Используем только entry1 для создания ссылки
-        link1 = f'https://station14.ru/index.php?title={entry1_value}&action=edit'
+        link1 = f'https://station14.ru/edit/{entry1_value}'
         link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry1_value}?action=edit'
     else:
         # Используем entry1 и entry2 для создания ссылки
-        link1 = f'https://station14.ru/index.php?title={entry1_value}&action=edit'
+        link1 = f'https://station14.ru/edit/{entry1_value}'
         link2 = f'https://ss14andromeda13.fandom.com/ru/wiki/{entry2_value}?action=edit'
         # Дополнительная логика для обработки ссылок
     return link1, link2
@@ -69,7 +70,7 @@ def process_links(link1, link2):
 
     # Обновляем текст на второй Вики-странице
     print("Начинаем вводить текст")
-    edit_and_save_text(link2, filename, username, password)
+    instance.edit_and_save_text(link2, filename, username, password)
     print("Ввод окончен")
 
 def copy_and_update_links(link1, link2):
