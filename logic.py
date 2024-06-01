@@ -5,7 +5,6 @@ from proxy_auth_data import username, password
 instance = FandomEditor()
 
 def check_links(entry1_value, entry2_value, use_single_entry):
-    # Проверяем, введено ли название страницы в первом окне
     if not entry1_value.startswith('https://'):
         # Если название страницы, то сохраняем его
         entry1_value = entry1_value.strip()

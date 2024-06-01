@@ -1,1 +1,3 @@
-Шаблон:TopSecret
+Шаблон:ColorPalette
+Шаблон:Frame
+Шаблон:Guide
