@@ -3,6 +3,7 @@
 import tkinter as tk
 from tkinter import ttk
 from logic import check_links
+import threading
 
 class SettingsVars:
     def __init__(self):
@@ -13,6 +14,11 @@ class SettingsVars:
 def toggle_entry_fields(entry2_main_menu, settings_vars):
     state = tk.NORMAL if settings_vars.use_single_entry.get() else tk.DISABLED
     entry2_main_menu.config(state=state)
+
+def execute_check_links(entry1_value, entry2_value, settings_vars):
+    thread = threading.Thread(target=check_links,
+                              args=(entry1_value, entry2_value, settings_vars))
+    thread.start()
 
 def create_main_menu_tab(tab_control, settings_vars):
     main_menu_tab = ttk.Frame(tab_control)
@@ -28,9 +34,9 @@ def create_main_menu_tab(tab_control, settings_vars):
                                              lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
-                                                 command=lambda: check_links(entry1_main_menu.get(),
-                                                                             entry2_main_menu.get(),
-                                                                             settings_vars))
+                                                 command=lambda: execute_check_links(entry1_main_menu.get(),
+                                                                                     entry2_main_menu.get(),
+                                                                                     settings_vars))
     button_copy_and_update_main_menu.pack(pady=10)
 
 def create_settings_tab(tab_control, settings_vars):
@@ -42,11 +48,11 @@ def create_settings_tab(tab_control, settings_vars):
     check_button1.place(x=0, y=0)
 
     check_button2 = tk.Checkbutton(settings_tab, text="Переносить шаблоны",
-                                   variable=settings_vars.use_templates) # не работает (Вкл/выкл шаблоны)
+                                   variable=settings_vars.use_templates)
     check_button2.place(x=check_button1.winfo_x(), y=check_button1.winfo_y() + check_button1.winfo_height() + 40)
 
     check_button3 = tk.Checkbutton(settings_tab, text="Переносить потомков (страницы с шаблонами)",
-                                   variable=settings_vars.transfer_descendants)  # Вкл/выкл шаблоны
+                                   variable=settings_vars.transfer_descendants)
     check_button3.place(x=check_button2.winfo_x(), y=check_button2.winfo_y() + check_button2.winfo_height() + 40)
 
 def main():
