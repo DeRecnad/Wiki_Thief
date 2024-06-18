@@ -1,0 +1,2 @@
+<noinclude>[[Категория:Шаблоны викиделов]]</noinclude>
+<div style="text-align:center;font-family:'Oswald';padding:1em 0 2.8em 0 ;font-size:1.35em;color:white;text-shadow: 1px 1px 0 darkblue;">“ {{{1|Здесь могла быть ваша цитата}}} ”</div>

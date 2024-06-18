@@ -1,3 +1,4 @@
-Шаблон:ColorPalette
-Шаблон:Frame
-Шаблон:Guide
+Шаблон:Infobox
+Шаблон:Infobox/Base
+Шаблон:JobHeader
+Шаблон:JobsTable
