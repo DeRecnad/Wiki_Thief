@@ -1,3 +1,5 @@
+# Wiki_Thief.py
+
 import tkinter as tk
 from tkinter import ttk
 from logic import check_links
@@ -6,10 +8,9 @@ class SettingsVars:
     def __init__(self):
         self.use_single_entry = tk.BooleanVar()
         self.use_templates = tk.BooleanVar()
-        # Добавьте другие переменные по мере необходимости
+        self.transfer_descendants = tk.BooleanVar()
 
 def toggle_entry_fields(entry2_main_menu, settings_vars):
-    # Включаем или выключаем поле в зависимости от состояния флажков
     state = tk.NORMAL if settings_vars.use_single_entry.get() else tk.DISABLED
     entry2_main_menu.config(state=state)
 
@@ -24,7 +25,7 @@ def create_main_menu_tab(tab_control, settings_vars):
     entry2_main_menu.pack(pady=10)
 
     settings_vars.use_single_entry.trace_add('write',
-                                            lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
+                                             lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
                                                  command=lambda: check_links(entry1_main_menu.get(),
@@ -41,8 +42,12 @@ def create_settings_tab(tab_control, settings_vars):
     check_button1.place(x=0, y=0)
 
     check_button2 = tk.Checkbutton(settings_tab, text="Переносить шаблоны",
-                                   variable=settings_vars.use_templates)
+                                   variable=settings_vars.use_templates) # не работает (Вкл/выкл шаблоны)
     check_button2.place(x=check_button1.winfo_x(), y=check_button1.winfo_y() + check_button1.winfo_height() + 40)
+
+    check_button3 = tk.Checkbutton(settings_tab, text="Переносить потомков (страницы с шаблонами)",
+                                   variable=settings_vars.transfer_descendants)  # Вкл/выкл шаблоны
+    check_button3.place(x=check_button2.winfo_x(), y=check_button2.winfo_y() + check_button2.winfo_height() + 40)
 
 def main():
     window = tk.Tk()

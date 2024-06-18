@@ -1,4 +1,0 @@
-Шаблон:Infobox
-Шаблон:Infobox/Base
-Шаблон:JobHeader
-Шаблон:JobsTable

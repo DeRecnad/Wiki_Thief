@@ -1,2 +1,13 @@
-<noinclude>[[Категория:Шаблоны викиделов]]</noinclude>
-<div style="text-align:center;font-family:'Oswald';padding:1em 0 2.8em 0 ;font-size:1.35em;color:white;text-shadow: 1px 1px 0 darkblue;">“ {{{1|Здесь могла быть ваша цитата}}} ”</div>
+<span class="tooltip" style="cursor:help;"><span style="color:{{{color|#EFEBD8}}}">''{{{1|ваш текст}}}''</span><!--
+
+--><span class="tooltiptext" style="color:white;font-size:initial; z-index: 150 !important;
+{{#switch:{{{pos|}}}|left=left:unset;right:0;|right=left:0;right:unset;|}}"><!--
+ 
+--><span style="display: block;text-align: center; z-index: 150 !important;">{{#if:{{{img|}}}|[[File:{{{img}}}|middle|96px]]|}}</span><!--
+
+--><span style="display: block;text-align: center; z-index: 150 !important;">{{{2|Название}}}</span><!--
+
+-->{{#if:{{{3|}}}|<span style="display: block;text-align: left;line-height: 15px;font-size:85%; z-index: 150 !important;"><br>{{{3|Описание}}}{{#if:{{{4|}}}|<br>{{{4}}}|}}}}<!--
+
+
+--></span></span></span><noinclude>[[Категория:Шаблоны викиделов]]{{doc}}</noinclude>

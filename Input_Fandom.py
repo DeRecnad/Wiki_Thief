@@ -31,7 +31,7 @@ class FandomEditor:
 
     def navigate_to_page(self, url):
         self.driver.get(url)
-        time.sleep(5)
+        time.sleep(7)
         try:
             enter_button = self.driver.find_element(by=By.XPATH, value="//span[@class='oo-ui-widget oo-ui-widget-enabled oo-ui-buttonElement oo-ui-buttonElement-framed oo-ui-labelElement oo-ui-flaggedElement-primary oo-ui-flaggedElement-progressive oo-ui-buttonWidget oo-ui-actionWidget']")
             enter_button.click()
