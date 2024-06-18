@@ -1,5 +1,5 @@
 # Wiki_Thief.py
-
+import sys
 import tkinter as tk
 from tkinter import ttk
 from logic import check_links
@@ -55,10 +55,14 @@ def create_settings_tab(tab_control, settings_vars):
                                    variable=settings_vars.transfer_descendants)
     check_button3.place(x=check_button2.winfo_x(), y=check_button2.winfo_y() + check_button2.winfo_height() + 40)
 
+def on_closing(window):
+    quit()
+
 def main():
     window = tk.Tk()
     window.title("Копировать и обновить Вики-страницы")
     window.geometry("320x320")
+    window.protocol("WM_DELETE_WINDOW", lambda: on_closing(window))  # Регистрируем обработчик закрытия окна
 
     settings_vars = SettingsVars()
 
@@ -69,6 +73,7 @@ def main():
 
     tab_control.pack(expand=1, fill="both")
     window.mainloop()
+
 
 if __name__ == "__main__":
     main()
