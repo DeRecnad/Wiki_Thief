@@ -1,2 +1,2 @@
-username = 'DeRecnadBot'
-password = 'B0g0m0l1337'
+username = 'DerRecnadBot'
+password = 'b@n@n4ik1337'
