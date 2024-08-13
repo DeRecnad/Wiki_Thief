@@ -88,6 +88,8 @@ def get_specific_text(url, output_filename='filename.txt'):
         response.raise_for_status()
     except Exception:
         print(f"Ошибка 520 (в Copy.py: {traceback.extract_stack()[-2].lineno})")
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            f.write(" ")
         return 'ERR520'
 
     # Проверяем успешность запроса
@@ -109,9 +111,13 @@ def get_specific_text(url, output_filename='filename.txt'):
             print(f"Текст сохранен в файл: {output_filename}")
         else:
             print(f"Элемент с тегом '{target_tag}' и классом '{target_class}' не найден.")
+            with open(output_filename, 'w', encoding='utf-8') as f:
+                f.write(" ")
     else:
         # Если запрос не успешен, выводим сообщение об ошибке
         print(f"Ошибка {response.status_code}: Невозможно получить содержимое страницы.")
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            f.write(" ")
 
 # Пример использования для вики КОРВАКС
 # korvax_url = 'https://station14.ru/wiki/Some_Page'

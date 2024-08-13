@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import os
 import re
 from urllib.parse import urljoin  # Импортируем функцию urljoin для объединения URL
+import urllib.parse
 
 # Определение вики
 WIKI_BASE_URLS = {
@@ -15,7 +16,7 @@ target_class = 'mw-editfont-monospace'
 
 # Функция для получения списка файлов с расширениями .png и .gif
 def get_image_files(text):
-    start_options = ["File:", "Файл:"]
+    start_options = ["File:", "Файл:", "file:"]
     end_options = [".png", ".gif"]
     files = []
     for start in start_options:
@@ -23,7 +24,12 @@ def get_image_files(text):
             pattern = r'\b' + start + r'.*?' + end + r'\b'
             matches = re.findall(pattern, text)
             files.extend(matches)
+
+    # Добавляем отладочный вывод
+    print("Найденные файлы:", files)
+
     return files
+
 
 # Функция для скачивания изображений
 def download_images(file_names, folder_path, wiki_key):
@@ -37,20 +43,26 @@ def download_images(file_names, folder_path, wiki_key):
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
-            # Находим все теги <div> с классом 'fullImageLink'
             image_divs = soup.find_all('div', class_='fullImageLink')
             found_image = False
             for image_div in image_divs:
-                # Находим ссылку на изображение внутри тега <a>
                 image_link = image_div.find('a', href=True)
                 if image_link:
                     image_url = urljoin(url, image_link['href'])
-                    if image_url.endswith(('.png', '.gif')):  # Проверяем, является ли ссылка на изображение
+                    if image_url.endswith(('.png', '.gif')):
                         found_image = True
-                        # Создаем папку для сохранения изображений, если она не существует
                         os.makedirs(folder_path, exist_ok=True)
-                        # Формируем полный путь для сохранения изображения
-                        image_path = os.path.join(folder_path, os.path.basename(image_url))
+
+                        # Декодирование URL для получения корректного имени файла
+                        decoded_filename = urllib.parse.unquote(os.path.basename(image_url))
+
+                        # Проверка допустимости имени файла
+                        sanitized_filename = "".join(
+                            [c if c.isalnum() or c in (' ', '.', '_') else '_' for c in decoded_filename])
+
+                        # Формирование полного пути для сохранения изображения
+                        image_path = os.path.join(folder_path, sanitized_filename)
+
                         # Сохраняем изображение в папку
                         with open(image_path, 'wb') as f:
                             f.write(requests.get(image_url).content)

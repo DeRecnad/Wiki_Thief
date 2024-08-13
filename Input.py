@@ -8,8 +8,44 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from urllib3.exceptions import MaxRetryError
+import urllib.parse
 
 import time
+
+import json
+
+
+def log_link(link, log_file='used_links.txt'):
+    """
+    Записывает ссылку в лог файл.
+    """
+    # Расшифровываем ссылку для удобства чтения
+    decoded_link = urllib.parse.unquote(link)
+
+    # Открываем файл в режиме добавления и записываем ссылку
+    with open(log_file, 'a', encoding='utf-8') as f:
+        f.write(decoded_link + '\n')
+
+
+def process_log_file_url(log_file='used_links.txt'):
+    """
+    Очищает лог файл: удаляет дубликаты и сортирует ссылки.
+    """
+    try:
+        with open(log_file, 'r', encoding='utf-8') as f:
+            links = f.readlines()
+
+        # Удаляем пробелы и дубликаты
+        unique_links = sorted(set(link.strip() for link in links))
+
+        # Сохраняем уникальные и отсортированные ссылки обратно в файл
+        with open(log_file, 'w', encoding='utf-8') as f:
+            for link in unique_links:
+                f.write(link + '\n')
+
+    except FileNotFoundError:
+        print(f"Файл {log_file} не найден. Возможно, он еще не был создан.")
+
 
 def click_save_button_iframe(driver, save_button_xpath):
     try:
@@ -79,7 +115,7 @@ def login(username, password, driver, url):
         )
         login_button.click()
         print('Нажата кнопка "Войти"')
-        time.sleep(2)
+        time.sleep(0.5)
 
         return driver
     except Exception as e:
@@ -91,7 +127,7 @@ def edit_and_save_text(url, filename, driver):
 
     driver.get(url)
     print('Выполнен переход на страницу')
-    time.sleep(5)
+    time.sleep(3)
 
     try:
         if wiki_type == 'FANDOM':
@@ -102,7 +138,7 @@ def edit_and_save_text(url, filename, driver):
         elif wiki_type == 'AAVIKKO':
             enter_button_xpath = "//a[@title='Редактировать данную страницу [alt-v]']"
             editable_xpath = "//div[@class='wikiEditor-ui']"
-            paragraph_xpath = ".//textarea[@aria-label='Редактор исходного вики-текста']"
+            paragraph_xpath = ".//textarea[@id='wpTextbox1']"
             save_element_xpath = "//span[@id='wpSaveWidget']"
             save_button_xpath = "//input[@id='wpSave']"
 
@@ -120,20 +156,20 @@ def edit_and_save_text(url, filename, driver):
         with open(filename, 'r', encoding='utf-8') as f:
             new_text = f.read()
         print(f"Текст получен в new_text")
-        time.sleep(1)
+        time.sleep(0.5)
 
         paragraph_element.send_keys(Keys.CONTROL + "a")
-        time.sleep(1)
+        time.sleep(0.5)
         paragraph_element.send_keys(Keys.DELETE)
 
         print("Очищено, приступаем писать текст")
         for line in new_text.splitlines():
-            paragraph_element.send_keys(line)
-            paragraph_element.send_keys(Keys.ENTER)
+            # Экранирование строки с помощью json.dumps
+            escaped_line = json.dumps(line + "\n")
+            script = f"arguments[0].value += {escaped_line};"
+            driver.execute_script(script, paragraph_element)
             time.sleep(0.1)
         print("Написано")
-
-
 
         if wiki_type == 'FANDOM':
             save_button = driver.find_element(by=By.ID, value=save_button_xpath)
@@ -141,9 +177,11 @@ def edit_and_save_text(url, filename, driver):
         elif wiki_type == 'AAVIKKO':
             click_save_button_iframe(driver, save_button_xpath)
 
-        time.sleep(2)
+        time.sleep(1)
 
         print("Сохранено")
+        log_link(url)
+
     except MaxRetryError as ex:
         print(f"MaxRetryError: {ex}")
     except Exception as ex:
