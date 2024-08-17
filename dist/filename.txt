@@ -1,2 +1,0 @@
-{{in development|Начальный}}
-<div style="box-shadow: 0 0 .2em violet; border-radius: .22em; margin: 1em 0 1em 0; padding: 1px; text-align:center"> Экспедиции </div>

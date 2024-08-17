@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from logic import check_count_links
+#from logic import check_count_links
+from main import check_and_process_links
 
 class SettingsVars:
     def __init__(self):
@@ -29,7 +30,7 @@ def create_main_menu_tab(tab_control, settings_vars):
                                           lambda *args: None)
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
-                                                 command=lambda: check_count_links(entry1_main_menu.get(),
+                                                 command=lambda: check_and_process_links(entry1_main_menu.get(),
                                                                              entry2_main_menu.get(),
                                                                              settings_vars))
     button_copy_and_update_main_menu.pack(pady=10)

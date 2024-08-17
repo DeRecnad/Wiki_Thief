@@ -1,0 +1,67 @@
+{
+    "wiki_input": [
+        {
+          "wiki_type": "AAVIKKO",
+          "wiki_url": "aavikko.di9.ru",
+          "login_url": "http://aavikko.di9.ru/index.php?title=%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:%D0%92%D1%85%D0%BE%D0%B4&returnto=%D0%A0%D0%BE%D0%BB%D0%B8",
+          "base_upload_url": "http://aavikko.di9.ru/index.php?title=Служебная:Загрузка",
+          "submit_button_name": "wpUpload",
+          "login_button_xpath": "//button[@class='mw-htmlform-submit mw-ui-button mw-ui-primary mw-ui-progressive']",
+          "login_field": "wpName1",
+          "password_field": "wpPassword1",
+          "enter_button_xpath": "//a[@title='Редактировать данную страницу [alt-v]']",
+          "editable_xpath": "//div[@class='wikiEditor-ui']",
+          "paragraph_xpath": ".//textarea[@id='wpTextbox1']",
+          "save_element_xpath": "//span[@id='wpSaveWidget']",
+          "save_button_xpath": "//input[@id='wpSave']"
+        },
+        {
+          "wiki_type": "Andromeda13",
+          "wiki_url": "",
+          "login_url": "",
+          "base_upload_url": "",
+          "submit_button_name": "",
+          "login_button_xpath": "//button[@class='mw-htmlform-submit mw-ui-button mw-ui-primary mw-ui-progressive']",
+          "login_field": "wpName1",
+          "password_field": "wpPassword1",
+          "enter_button_xpath": "//a[@title='Редактировать данную страницу [alt-v]']",
+          "editable_xpath": "//div[@class='wikiEditor-ui']",
+          "paragraph_xpath": ".//textarea[@id='wpTextbox1']",
+          "save_element_xpath": "//span[@id='wpSaveWidget']",
+          "save_button_xpath": "//input[@id='wpSave']"
+        }
+    ],
+    "wiki_output": [
+        {
+          "wiki_url": "wiki14.ss220.club",
+          "wiki_base_url": "https://wiki.deadspace14.net/index.php?title=",
+          "wiki_type": "SS220",
+          "div_class": "templatesUsed",
+          "template_keyword": "Шаблон",
+          "target_tag": "textarea",
+          "target_class": "mw-editfont-monospace",
+          "wiki_link": "https://wiki14.ss220.club/index.php?title=***&action=edit"
+        },
+        {
+          "wiki_url": "station14.ru",
+          "wiki_base_url": "https://station14.ru/edit/",
+          "wiki_type": "KORVAX",
+          "div_class": "templatesUsed",
+          "template_keyword": "Шаблон",
+          "target_tag": "textarea",
+          "target_class": "mw-editfont-monospace",
+          "wiki_link": "https://station14.ru/edit/***"
+        },
+        {
+          "wiki_url": "wiki.deadspace14.net",
+          "wiki_base_url": "https://wiki.deadspace14.net/index.php?title=",
+          "wiki_type": "deadspace14",
+          "div_class": "templatesUsed",
+          "template_keyword": "Шаблон",
+          "target_tag": "textarea",
+          "target_class": "mw-editfont-monospace",
+          "wiki_link": "https://wiki.deadspace14.net/index.php?title=***&action=edit"
+        }
+
+    ]
+}

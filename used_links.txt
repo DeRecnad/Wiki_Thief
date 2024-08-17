@@ -1,0 +1,8 @@
+http://aavikko.di9.ru/index.php?title=Взаимодействия&action=edit
+http://aavikko.di9.ru/index.php?title=СНК&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:TODO&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:Warning&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:Государство&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:Навигация/Государства&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:Навигация/Группировки&action=edit
+http://aavikko.di9.ru/index.php?title=Шаблон:Навигация/Расы&action=edit
