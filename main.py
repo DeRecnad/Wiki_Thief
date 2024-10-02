@@ -5,7 +5,6 @@ import pickle
 import time
 import json
 import requests
-import traceback
 import re
 
 import tkinter as tk
@@ -155,6 +154,7 @@ def process_link_pair(link1, link2, driver, blacklist_links):
     filename = 'filename.txt'
 
     print(f"Получаем текст с {link1}")
+
     if get_specific_text(link1) == 'ERR520':
         print(f"Не удалось получить текст с {link1}")
         return 0
@@ -407,7 +407,6 @@ def determine_wiki_type_input(url, data="wiki_data.json", fields=None):
             'enter_button_xpath', 'editable_xpath', 'paragraph_xpath',
             'save_element_xpath', 'save_button_xpath'
         ]))
-
 
 
 def determine_wiki_type_output(url, data="wiki_data.json", fields=None):
@@ -753,22 +752,6 @@ def download_images(file_names, folder_path, wiki_key):
         else:
             print(f"Не удалось загрузить страницу {url}.")
 
-# Функция для скачивания изображений из определенной вики
-def download_images_from_wiki(url, folder_path, wiki_key):
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
-        text_area = soup.find(target_tag, class_=target_class)
-        if text_area:
-            text = text_area.text
-            # Получаем список файлов с расширениями .png и .gif
-            image_files = get_image_files(text)
-            # Скачиваем изображения
-            download_images(image_files, folder_path, wiki_key)
-        else:
-            print("Не удалось найти текстовую область на странице.")
-    else:
-        print("Не удалось загрузить страницу.")
 
 
 def log_transferred_file(file_name, log_file='transferred_files.txt'):
