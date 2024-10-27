@@ -4,8 +4,7 @@ from tkinter import messagebox
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-
-from main import check_and_process_links
+import threading
 
 
 class SettingsVars:
@@ -13,9 +12,11 @@ class SettingsVars:
         self.use_single_entry = tk.IntVar(value=1)
         self.use_templates = tk.IntVar(value=1)
 
+
 def toggle_entry_fields(entry2_main_menu, settings_vars):
     state = tk.NORMAL if settings_vars.use_single_entry.get() else tk.DISABLED
     entry2_main_menu.config(state=state)
+
 
 def create_main_menu_tab(tab_control, settings_vars):
     main_menu_tab = ttk.Frame(tab_control)
@@ -31,10 +32,25 @@ def create_main_menu_tab(tab_control, settings_vars):
                                              lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
-                                                 command=lambda: check_and_process_links(entry1_main_menu.get(),
-                                                                                         entry2_main_menu.get(),
-                                                                                         settings_vars))
+                                                 command=lambda: start_copy_and_update(entry1_main_menu.get(),
+                                                                                       entry2_main_menu.get(),
+                                                                                       settings_vars,
+                                                                                       button_copy_and_update_main_menu))
     button_copy_and_update_main_menu.pack(pady=10)
+
+
+def start_copy_and_update(link1, link2, settings_vars, button):
+    button.config(state=tk.DISABLED)  # Блокируем кнопку
+
+    # Вспомогательная функция для запуска в потоке
+    def run_task():
+        check_and_process_links(link1, link2, settings_vars)  # Запускаем обработку
+        button.config(state=tk.NORMAL)  # Разблокируем кнопку после завершения
+
+    # Запускаем новый поток для выполнения функции
+    threading.Thread(target=run_task).start()
+
+
 
 def update_chromedriver():
     try:
@@ -48,6 +64,7 @@ def update_chromedriver():
         messagebox.showinfo("Успех", "ChromeDriver успешно обновлён!")
     except Exception as e:
         messagebox.showerror("Ошибка", f"Не удалось обновить ChromeDriver: {e}")
+
 
 def create_settings_tab(tab_control, settings_vars):
     settings_tab = ttk.Frame(tab_control)
@@ -63,8 +80,9 @@ def create_settings_tab(tab_control, settings_vars):
 
     # Кнопка для обновления ChromeDriver
     button_update_chromedriver = tk.Button(settings_tab, text="Обновить ChromeDriver",
-                                             command=update_chromedriver)
+                                           command=update_chromedriver)
     button_update_chromedriver.place(x=0, y=50)
+
 
 def main():
     window = tk.Tk()
@@ -80,5 +98,7 @@ def main():
     tab_control.pack(expand=1, fill="both")
     window.mainloop()
 
+
 if __name__ == "__main__":
+    from main import check_and_process_links  # Импортируем функцию здесь
     main()
