@@ -21,6 +21,12 @@ from selenium.common.exceptions import NoSuchElementException, ElementClickInter
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+
+# Подключаем менеджер драйвера Хрома
+from webdriver_manager.chrome import ChromeDriverManager
+
 from urllib3.exceptions import MaxRetryError
 from urllib.parse import urljoin
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
@@ -197,7 +203,7 @@ def check_and_process_links(link1, link2, settings):
     blacklist_links = load_blacklist('blacklist_links.txt')
     blacklist_files = load_blacklist('blacklist_files.txt')
 
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     login_to_wiki(username, password, driver, link2)  # Вход выполняется один раз
 
     try:

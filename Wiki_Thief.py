@@ -1,15 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
-#from logic import check_count_links
+from tkinter import messagebox
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 from main import check_and_process_links
+
 
 class SettingsVars:
     def __init__(self):
-        self.use_single_entry = tk.IntVar(value=1)  # Устанавливаем значение 1 для включенного состояния
-        self.use_templates = tk.IntVar(value=1)     # Устанавливаем значение 1 для включенного состояния
+        self.use_single_entry = tk.IntVar(value=1)
+        self.use_templates = tk.IntVar(value=1)
 
 def toggle_entry_fields(entry2_main_menu, settings_vars):
-    # Включаем или выключаем поле в зависимости от состояния флажков
     state = tk.NORMAL if settings_vars.use_single_entry.get() else tk.DISABLED
     entry2_main_menu.config(state=state)
 
@@ -20,20 +24,30 @@ def create_main_menu_tab(tab_control, settings_vars):
     entry1_main_menu = tk.Entry(main_menu_tab, width=30)
     entry1_main_menu.pack(pady=10)
 
-    entry2_main_menu = tk.Entry(main_menu_tab, width=30, state=tk.NORMAL)  # Поле по умолчанию включено
+    entry2_main_menu = tk.Entry(main_menu_tab, width=30, state=tk.NORMAL)
     entry2_main_menu.pack(pady=10)
 
     settings_vars.use_single_entry.trace_add('write',
-                                            lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
-
-    settings_vars.use_templates.trace_add('write',
-                                          lambda *args: None)
+                                             lambda *args: toggle_entry_fields(entry2_main_menu, settings_vars))
 
     button_copy_and_update_main_menu = tk.Button(main_menu_tab, text="Копировать и обновить",
                                                  command=lambda: check_and_process_links(entry1_main_menu.get(),
-                                                                             entry2_main_menu.get(),
-                                                                             settings_vars))
+                                                                                         entry2_main_menu.get(),
+                                                                                         settings_vars))
     button_copy_and_update_main_menu.pack(pady=10)
+
+def update_chromedriver():
+    try:
+        # Устанавливаем ChromeDriver с помощью webdriver-manager
+        service = Service(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service)
+
+        # Закрываем драйвер после установки
+        driver.quit()
+
+        messagebox.showinfo("Успех", "ChromeDriver успешно обновлён!")
+    except Exception as e:
+        messagebox.showerror("Ошибка", f"Не удалось обновить ChromeDriver: {e}")
 
 def create_settings_tab(tab_control, settings_vars):
     settings_tab = ttk.Frame(tab_control)
@@ -47,6 +61,11 @@ def create_settings_tab(tab_control, settings_vars):
                                    variable=settings_vars.use_templates)
     check_button2.place(x=0, y=25)
 
+    # Кнопка для обновления ChromeDriver
+    button_update_chromedriver = tk.Button(settings_tab, text="Обновить ChromeDriver",
+                                             command=update_chromedriver)
+    button_update_chromedriver.place(x=0, y=50)
+
 def main():
     window = tk.Tk()
     window.title("Копировать и обновить Вики-страницы")
@@ -55,7 +74,6 @@ def main():
     settings_vars = SettingsVars()
 
     tab_control = ttk.Notebook(window)
-
     create_main_menu_tab(tab_control, settings_vars)
     create_settings_tab(tab_control, settings_vars)
 
