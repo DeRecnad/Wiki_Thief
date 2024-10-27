@@ -15,6 +15,7 @@ Clownduffle.png
 Combatmedipen.png
 Core.png
 Crate_icon.png
+Dead.png
 Discord_wordmark_white.png
 Dnahuman.png
 Duffle_syndie.png
@@ -47,6 +48,7 @@ PyjamaSyndicate.gif
 Rules_Index.png
 SS220_Logo.png
 ShowJob.png
+Skull_icon.png
 Smokepack_syn.png
 Stamp_syn.png
 Statelaws.png

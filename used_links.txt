@@ -1,3 +1,4 @@
+http://aavikko.di9.ru/index.php?title=Test1&action=edit
 http://aavikko.di9.ru/index.php?title=Вещи_Синдиката&action=edit
 http://aavikko.di9.ru/index.php?title=Заглавная_страница_test&action=edit
 http://aavikko.di9.ru/index.php?title=Искусственный_Интеллект&action=edit
@@ -15,3 +16,4 @@ http://aavikko.di9.ru/index.php?title=Шаблон:Main+page/onthisday&action=ed
 http://aavikko.di9.ru/index.php?title=Шаблон:Main+page/settings&action=edit
 http://aavikko.di9.ru/index.php?title=Шаблон:Plain+link&action=edit
 http://aavikko.di9.ru/index.php?title=Шаблон:Statsbar&action=edit
+http://aavikko.di9.ru/index.php?title=Экстерминатор&action=edit

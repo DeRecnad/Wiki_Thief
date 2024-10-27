@@ -504,10 +504,10 @@ def login_to_wiki(username, password, driver, wiki_url):
 
 
 # Редактируем и сохраняем текст на странице wiki
-def click_save_button_in_iframe(driver, save_button_xpath):
+#def click_save_button_in_iframe(driver, save_button_xpath):
     # Это функция-обертка для нажатия на кнопку сохранения в iframe, если требуется.
-    save_button = driver.find_element(by=By.XPATH, value=save_button_xpath)
-    save_button.click()
+    #save_button = driver.find_element(by=By.XPATH, value=save_button_xpath)
+    #save_button.click()
 
 def edit_and_save_wiki_text(url, filename, driver):
     """
