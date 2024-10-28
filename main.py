@@ -106,7 +106,7 @@ def is_item_in_blacklist(item, blacklist):
 # Обрабатываем файлы с заданной ссылкой
 def process_files_for_upload(link, folder_path, upload_url, submit_button_name, driver, blacklist_files):
     """
-    Загружает файлы, находит изображения и отправляет их на сервер.
+    Находит изображения, проверяет их на черный список, скачивает и отправляет на сервер.
     """
     output_filename = 'filename.txt'
     get_specific_text(link, output_filename)
@@ -125,22 +125,17 @@ def process_files_for_upload(link, folder_path, upload_url, submit_button_name, 
         print("Ошибка: полученный текст пуст.")
         return
 
-    all_files = get_image_files(page_text)
+    # Получаем файлы, не находящиеся в черном списке
+    valid_files = get_image_files(page_text, blacklist_files)
 
-    # Определение типа вики и параметров
-    wiki_params = determine_wiki_type_output(link, data, fields=[
-        'wiki_type'
-    ])
-
+    # Определяем параметры для скачивания
+    wiki_params = determine_wiki_type_output(link, data, fields=['wiki_type'])
     wiki_type = wiki_params[0]
 
-    download_images(all_files, folder_path, wiki_type)
+    # Скачиваем только файлы, прошедшие проверку
+    download_images(valid_files, folder_path, wiki_type)
 
-    for filename in os.listdir(folder_path):
-        if is_item_in_blacklist(filename, blacklist_files):
-            print(f"Файл {filename} находится в черном списке. Пропускаем и удаляем...")
-            os.remove(os.path.join(folder_path, filename))
-
+    # Загрузка изображений на сервер
     upload_files_in_folder(folder_path, upload_url, submit_button_name, driver)
 
 
@@ -196,7 +191,7 @@ def check_and_process_links(link1, link2, settings):
     if wiki_type is None:
         raise ValueError(f"Unknown wiki type for URL: {link1}")
 
-    folder_path = r"D:\Programming\Wiki_Thief\downloaded_images"
+    folder_path = os.path.join(os.getcwd(), "downloaded_images")
     #base_upload_url = "http://aavikko.di9.ru/index.php?title=Служебная:Загрузка"
     #submit_button_name = "wpUpload"
 
@@ -463,6 +458,7 @@ def determine_wiki_type_output(url, data="wiki_data.json", fields=None):
         'wiki_link'
     ]))
 
+
 # Входим в аккаунт на wiki
 def login_to_wiki(username, password, driver, wiki_url):
     """
@@ -642,6 +638,7 @@ def write_template_data_to_file(url, file_path='templates_used.txt', json_file_p
         print(f'Ошибка при запросе к странице. Код: {response.status_code}')
         return 'ERR520'
 
+
 def get_specific_text(url, output_filename='filename.txt', json_data="wiki_data.json"):
     """
     Получает текст из указанного URL и сохраняет его в файл.
@@ -699,21 +696,36 @@ def get_specific_text(url, output_filename='filename.txt', json_data="wiki_data.
             f.write(" ")
 
 
-# Функция для получения списка файлов с расширениями .png и .gif
-def get_image_files(text):
+def normalize_filename(filename):
+    """Нормализует название файла, заменяя пробелы на подчеркивания и приводя к нижнему регистру."""
+    return filename.replace(" ", "_").lower()
+
+
+# Функция для получения списка файлов с расширениями .png и .gif, с проверкой на черный список
+def get_image_files(text, blacklist):
     start_options = ["File:", "Файл:", "file:"]
     end_options = [".png", ".gif"]
-    files = []
+    valid_files = []
+
+    # Нормализуем черный список
+    normalized_blacklist = {normalize_filename(entry.strip()) for entry in blacklist}
+
     for start in start_options:
         for end in end_options:
-            pattern = r'\b' + start + r'.*?' + end + r'\b'
+            pattern = rf'\b{start}(.+?){end}\b'
             matches = re.findall(pattern, text)
-            files.extend(matches)
 
-    # Добавляем отладочный вывод
-    print("Найденные файлы:", files)
+            for item in matches:
+                filename = f"{item.strip()}{end}"
+                decoded_filename = normalize_filename(urllib.parse.unquote(filename))
 
-    return files
+                # Проверяем, не входит ли нормализированное имя в черный список
+                if decoded_filename not in normalized_blacklist:
+                    valid_files.append(f"{start}{filename}")
+
+    print("Файлы, не попавшие в черный список:", valid_files)
+    return valid_files
+
 
 
 # Функция для скачивания изображений
@@ -759,7 +771,6 @@ def download_images(file_names, folder_path, wiki_key):
             print(f"Не удалось загрузить страницу {url}.")
 
 
-
 def log_transferred_file(file_name, log_file='transferred_files.txt'):
     """
         Записывает имя файла в лог файл.
@@ -770,6 +781,7 @@ def log_transferred_file(file_name, log_file='transferred_files.txt'):
             f.write(file_name + '\n')
     except Exception as e:
         print(f"Ошибка при записи файла {file_name}: {e}")
+
 
 def process_log_file_files(log_file_path='transferred_files.txt'):
     try:
@@ -787,7 +799,6 @@ def process_log_file_files(log_file_path='transferred_files.txt'):
 
     except Exception as e:
         print(f"Произошла ошибка при обработке лог-файла: {e}")
-
 
 
 def upload_file_to_wiki(driver, upload_url, file_path):
